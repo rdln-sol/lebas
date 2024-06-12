@@ -1,0 +1,1079 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سبد خرید</title>
+    <script
+      type="text/javascript"
+      async=""
+      src="https://www.google-analytics.com/analytics.js"
+    ></script>
+    <script
+      type="text/javascript"
+      async=""
+      src="https://www.googletagmanager.com/gtag/js?id=G-D820J2MXBK&amp;l=dataLayer&amp;cx=c"
+    ></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/js/jquery.min.js' %}"></script>
+    <script src="{% static '/js/lottie-player.min.js' %}"></script>
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static '/js/nouislider.min.js' %}"></script>
+    <script src="{% static '/js/toastr.min.js' %}"></script>
+    
+    <link rel="stylesheet" href="{% static '/css/fnt.css' %}" />
+    <link rel="icon" href="{% static '/img/ghazi-logo.jpg' %}" type="image/png" />
+    <link rel="stylesheet" href="{% static '/css/toastr.min.css' %}" />
+  </head>
+  <body class="basket-page">
+    <!-- header -->
+    <header>
+        <div class="container">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ msg }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center">
+              <a
+                href="{% url 'cart' %}"
+                title=""
+                target="_self"
+                class="btn btn-outline-secondary btn-with-icon"
+              >
+                <img src="{% static '/img/header/basket.svg' %}" alt="Basket icon" />
+                <span>سبد خرید</span>
+                <span class="btn-badge bg-light">{{ cart.items.all|length }}</span>
+              </a>
+  
+              {% if user.is_authenticated %}
+                  <div
+                  class="btn btn-primary btn-with-icon me-2 ps-4 loggedin-header-button"
+                  >
+                  <img
+                      src="https://ibolak.com/assets/new/icons/user.svg"
+                      alt="User icon"
+                  />
+                  <span>{{ user.get_full_name }}</span>
+                  <ul>
+                      <li>
+                      <a
+                          href="{% url 'profile' %}"
+                          title="پیشخوان"
+                          target="_self"
+                      >
+                          <img
+                          src="https://ibolak.com/assets/new/icons/home.svg"
+                          alt="dashboard"
+                          />
+                          پیشخوان
+                      </a>
+                      </li>
+                      <li>
+                      <a
+                          href="{% url 'logout' %}"
+                          title="خروج از حساب"
+                          target="_self"
+                      >
+                          <img
+                          src="https://ibolak.com/assets/new/icons/address.svg"
+                          alt="log out"
+                          />
+                          خروج از حساب
+                      </a>
+                      </li>
+                  </ul>
+                  </div>
+              {% else %}
+                  <a
+                  href="{% url 'login' %}"
+                  title=""
+                  target="_self"
+                  class="btn btn-primary btn-with-icon me-2 ps-4"
+                  >
+                  <img src="{% static '/img/header/user.svg' %}" alt="User icon" />
+                  <span>ورود/ثبت نام</span>
+                  </a>
+              {% endif %}
+  
+  
+              <form method="get" action="#" class="search-wrapper">
+                <span class="search-wrapper-icon">
+                  <img src="{% static '/img/header/search.svg' %}" alt="Search Icon" />
+                </span>
+                <input
+                  name="search_key"
+                  autocomplete="off"
+                  maxlength="100"
+                  type="text"
+                  data-url="#"
+                  data-search-input=""
+                  placeholder="جستجو در لباس قاضی"
+                />
+              </form>
+              <div
+                class="search-autocomplete"
+                style="width: 522px; right: 464.138px; top: 172.8px"
+              >
+              </div>
+            </div>
+            <a href="/" title="" target="_self">
+              <img
+                src="{% static '/img/ghazi-logo.jpg' %}"
+                height="50"
+                alt="آی‌بولک"
+                style="width: 100px; height: 85px; mix-blend-mode: multiply"
+              />
+            </a>
+          </div>
+          <nav class="header-nav">
+            <div class="header-nav-right">
+              <div class="dots-after megamenu-wrapper">
+                <a href="#" target="_self">
+                  <span>زنانه</span>
+                  <img src="{% static '/img/header/arrow-down.svg' %}" />
+                </a>
+                <div class="dots-after-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="megamenu">
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>بالاپوش</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          بلوز/شومیز
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          مانتو/تونیک
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          پیراهن/سارافون
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          سرهمی/اورال
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          کت/کت کتان/کت جین
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          کاپشن/پافر/بارانی/پالتو
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          هودی/سویشرت
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          پلیور/ژاکت
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>جین</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          بگ/نیم بگ/واید
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جین/مام فیت/مام استایل
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جین راسته
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جین جذب/اسکینی
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جین دمپا/بوت کات
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>شلوار</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          راسته و کلاسیک
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          پارچه ای/کتان
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          اسلش/جاگر
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          لگ/ساپورت
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          شلوارک
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          شلوار راحتی
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>لباس اسپرت و راحتی</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          تیشرت/پولوشرت
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          بلوز آستین بلند
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          تاپ/نیم تنه
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          لباس خواب/لباس زیر
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          ست راحتی/ست اسپرت
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>سایر محصولات</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          دستکش
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          حوله
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          یقه حجاب
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          کیف آرایشی
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          ارگانایزر
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جوراب
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          چشم بند
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          کمربند
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="dots-after megamenu-wrapper">
+                <a href="#" target="_self">
+                  <span>کیف</span>
+                </a>
+                <div class="dots-after-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="dots-after megamenu-wrapper">
+                <a href="#" target="_self">
+                  <span>مردانه</span>
+                  <img src="{% static '/img/header/arrow-down.svg' %}" />
+                </a>
+                <div class="dots-after-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="megamenu">
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>بالاپوش</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          پیراهن مردانه
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          پلیور/ سویشرت / هودی
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          کاپشن/کت
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>شلوار</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جین
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          شلوار راحتی/شلوارک
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>لباس اسپرت</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          تیشرت/پولوشرت
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          ست اسپرت/ست راحتی
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>سایر</strong>
+                    </a>
+                    <ul>
+                      <li>
+                        <a href="#" title="" target="_self" class="dots-vertical">
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          <span class="dots-vertical-dots"></span>
+                          جوراب
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="dots-after megamenu-wrapper">
+                <a href="#" target="_self">
+                  <span>کلاه/روسری/شال</span>
+                  <img src="{% static '/img/header/arrow-down.svg' %}" />
+                </a>
+                <div class="dots-after-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="megamenu">
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>کلاه</strong>
+                    </a>
+                    <ul></ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>شال</strong>
+                    </a>
+                    <ul></ul>
+                  </div>
+                  <div class="megamenu-col">
+                    <a href="#">
+                      <strong>روسری</strong>
+                    </a>
+                    <ul></ul>
+                  </div>
+                </div>
+              </div>
+              <div class="dots-after megamenu-wrapper">
+                <a href="#" target="_self">
+                  <span>مهربانی</span>
+                </a>
+                <div class="dots-after-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+    </header>
+    <!-- product -->
+    {% if cart.items.all %}
+    <div class="container">
+      <main class="pb-5">
+        <div class="row">
+          <div class="col-lg-8 col-sm-12">
+            {% for item in cart.items.all %}
+                <div class="basket-items-wrapper" style="margin-bottom: 0.2cm;">
+                    <div
+                    class="product-horizontal"
+                    data-role="product"
+                    data-id="5k73l"
+                    data-variant-id="176694"
+                    >
+                    <div class="product-horizontal-image">
+                        <img src="{{ item.item.product.photo.all.0.image.url }}" alt="{{ item.item.product.name }}" />
+                    </div>
+                    <div class="product-horizontal-body">
+                        <div class="row w-100 justify-content-between">
+                        <div
+                            class="col-auto d-flex align-items-center product-horizontal-title-outer"
+                        >
+                            <a
+                            href="{% url 'product' item.item.product.id %}"
+                            title="{{ item.item.product.name }}"
+                            target="_blank"
+                            class="product-horizontal-title"
+                            ><strong class="fs-5">{{ item.item.product.name }}</strong></a
+                            >
+                        </div>
+                        <div
+                            class="col-auto d-flex align-items-center justify-content-end gap-2 ps-0 product-horizontal-variants"
+                        >
+                            <span class="bg-lighter px-3 py-2 rounded-2"
+                            >رنگ: {{ item.item.color }}</span
+                            >
+                            <span class="bg-lighter px-3 py-2 rounded-2"
+                            >سایز (حروفی): {{ item.item.size }}</span
+                            >
+                            <button
+                            class="border-none px-3 py-2 rounded-2 bg-light-red"
+                            data-remove="product"
+                            >
+                            <img
+                                src="https://ibolak.com/assets/new/icons/trash.svg"
+                                alt="Remove item from basket"
+                            />
+                            </button>
+                        </div>
+                        </div>
+                        <div
+                        class="d-flex align-items-center justify-content-between ps-2 mt-3"
+                        >
+                        <div class="count-wrapper" data-max="20" data-min="1">
+                            <input
+                            type="hidden"
+                            value="1"
+                            data-id="5k73l"
+                            data-variant-id="176694"
+                            />
+                            <div class="count-wrapper-inner">
+                            <button type="button" onclick="increaseQuantity({{ item.id }})">
+                                <img
+                                src="https://ibolak.com/assets/new/icons/plus.svg"
+                                alt="Increase count"
+                                />
+                            </button>
+                            <span class="persian-number" data-count-indicator=""
+                                >{{ item.quantity }}</span
+                            >
+                            <button type="button" onclick="decreaseQuantity({{ item.id }})"
+                            >
+                                <img
+                                src="https://ibolak.com/assets/new/icons/minus.svg"
+                                alt="Decrease count"
+                                />
+                            </button>
+                            </div>
+                        </div>
+                        <div
+                            class="product-horizontal-price d-flex flex-column align-items-end"
+                        >
+                            <div>
+                            <strong class="text-primary fs-5 persian-number">
+                                {{ item.item.product.price }}
+                            </strong>
+                            <span class="text-primary">تومان</span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+          </div>
+          
+          <aside class="col-lg-4 col-sm-12">
+            <div class="card">
+              <h4 class="title-dot mb-3">فاکتور خرید شما</h4>
+              <div
+                id="total-price"
+                class="d-flex align-items-center justify-content-between my-2"
+              >
+                <p class="mb-0">مجموع سفارش</p>
+                <strong class="fw-medium"> {{ total_price }} تومان </strong>
+              </div>
+              <div
+                id="total-price"
+                class="d-flex align-items-center justify-content-between my-2"
+              >
+                <p class="mb-0">مبلغ پرداختی شما</p>
+                <strong class="fw-medium"> {{ total_price }} تومان </strong>
+              </div>
+              <a
+                class="btn btn-primary d-flex align-items-center justify-content-center mt-3"
+                href="{% url 'invoice' %}"
+                title=""
+                target="_self"
+                ><span>ادامه فرایند خرید</span></a
+              >
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    {% else %}
+    <div class="container">
+      <main class="basket-empty">
+        <div
+          class="d-flex align-items-center justify-content-center flex-column py-5"
+        >
+          <img
+            src="https://ibolak.com/assets/new/icons/empty-hanger.svg"
+            alt="Empty icon"
+          />
+          <h1 class="fs-5 mt-5">سبد خرید شما خالی است</h1>
+          <p class="text-muted mb-5">
+            متاسفانه محصولی در سبد خرید شما یافت نشد.
+          </p>
+          <a
+            href="{% url 'index' %}"
+            title="صفحه اصلی لباس قاضی"
+            class="btn btn-primary round ed"
+            >رفتن به صفحه اصلی
+          </a>
+        </div>
+      </main>
+    </div>
+    {% endif %}
+    <script>
+        function increaseQuantity(item_id) {
+            fetch(`/products/${item_id}/increase/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function decreaseQuantity(item_id) {
+            fetch(`/products/${item_id}/decrease/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+    <footer class="container-fluid mt-4 footer_back ">   
+      <div class="container py-5 ozv-back">
+        <div class="row">
+          <div class="col-sm-12 col-md-3 d-flex flex-column justify-content-center footer-text1">
+            <h5>
+              بروز باشید.
+            </h5>
+            <p>
+              از همه در <span>موجودی کلاها</span> جلو بزن.
+            </p>
+          </div>
+          <div class="col-sm-12 col-md-4  d-flex flex-column justify-content-center footer-text2">
+            <p>
+              به جمع 20,000 تایی من و تو خوش آمدید!
+            </p>
+          </div>
+          <div class="col-sm-12 col-md-5 d-flex flex-column justify-content-center align-items-center">
+            <div class="input-group">
+              <input type="text" class="form-control input-search-nav ozv-cust" placeholder="شماره خود را وارد کن ...." aria-label="Recipient's username" aria-describedby="button-addon2">
+              <button class="btn btn-cust" type="button" id="button-addon2">اشتراک</button>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-12 col-md-7">
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <div class="">
+                <h5> با من و تو</h5>
+              </div>
+              <div class="d-flex flex-column justify-content-end align-items-start about-us1">
+                <a href="">صفحه اصلی</a>
+                <a href="">مردانه</a>
+                <a href="">زنانه</a>
+                <a href="">بچگانه</a>
+                <a href="">درباره ما</a>
+                <a href="">تماس با ما</a>
+                <a href="">قوانین و مقررات</a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4"><div class="">
+              <h5>خدمات مشتریان</h5>
+              <div class="d-flex flex-column justify-content-end align-items-start about-us1">
+                <a href="">پاسخ به پرسش های متداول</a>
+                <a href="">مرجوعی کالا</a>
+                <a href="">نحوه ثبت سفارش</a>
+                <a href="">شیوه های پرداخت</a>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5 d-flex flex-column justify-content-end align-items-start addr">
+          <h5 class="mb-4">اطلاعات من و تو</h5>
+          <p><span>آدرس:</span> کرمان،میدان پژوهش،دانشگاه شهید باهنر کرمان،ساختمان s</p>
+          <P><span>تلفن:</span> 034-34372235</P>
+          <a href="" class="align-self-end"><img src="/assets/img/ghazi-logo.jpg" class="img-icon" alt=""></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+      
+  <script src="{% static '/js/jquery.min.js' %}"></script>
+  <script src="{% static '/js/bootstrap.min.js' %}"></script>
+  <script src="{% static '/js/nouislider.min.js' %}"></script>
+  <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+  <script src="{% static '/js/main.js' %}"></script>
+  <script src="{% static '/js/toastr.min.js' %}"></script>
+    <script>
+      let priceUnit = "تومان";
+      let typingTimer; // Timer identifier
+      const doneTypingInterval = 500; // Time in milliseconds, adjust as needed
+      $(function () {
+        $("[data-search-input]").on("keyup", function () {
+          clearTimeout(typingTimer);
+          let $input = $(this);
+          let url = $input.data("url");
+          typingTimer = setTimeout(function () {
+            sendSearchRequest(url, $input.val());
+          }, doneTypingInterval);
+        });
+      });
+      let toast = function (title, msg, type, options) {
+        if (typeof toastr === "undefined") {
+          return;
+        }
+
+        var $addClear = true;
+        let timeOut = (options && options.timeOut) || 0;
+        let progressBar = (options && options.progressBar) || false;
+
+        toastr.options = {
+          closeButton: false,
+          progressBar,
+          positionClass: "toast-bottom-left",
+          onclick: null,
+          timeOut,
+          rtl: true,
+          extendetTimeout: 0,
+          closeOnHover: false,
+          tapToDismiss: true,
+        };
+
+        toastr[type](msg, title);
+
+        if (timeOut.length) {
+          toastr.options.timeOut = $addClear ? 0 : timeOut;
+        }
+      };
+      function renderCategories(categories) {
+        let categories_struct = "";
+        var categoryTag = $(".autocomplete-categories").find(
+          ".autocomplete-tags"
+        );
+        if (categories.length > 0) {
+          $(categories).each(function (key, category) {
+            categories_struct += `
+                    <a href="${category.url}" title="" target="_self">
+                        <span>${category.title}</span>
+                        <img src="https://ibolak.com/assets/new/icons/arrow-left-simple.svg" alt="" />
+                    </a>`;
+          });
+          categoryTag.html(categories_struct);
+        } else {
+          categoryTag.html(`<span>موردی یافت نشد!</span>`);
+        }
+      }
+      function renderProducts(products) {
+        let products_struct = "";
+        var productTag = $(".autocomplete-products");
+        if (products.length > 0) {
+          $(products).each(function (key, product) {
+            let mainCategory = product.mainCategory[0];
+            products_struct += `
+                    <a href="${
+                      product.share_url
+                    }" title="" target="_self" class="autocomplete-product">
+                        <div class="autocomplete-product-image">
+                            <img src="${
+                              product.image_urls ? product.image_urls.url : null
+                            }" alt="" />
+                        </div>
+                        <div class="autocomplete-product-body">
+                            <p class="fw-bold">${product.title}</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="text-muted text-small">${
+                                  mainCategory ? mainCategory.title : ""
+                                }</span>
+                                <strong class="text-primary">${numberFormat(
+                                  product.final_price
+                                )} ${priceUnit}</strong>
+                            </div>
+                        </div>
+                    </a>`;
+          });
+          productTag.html(`<strong>محصولات</strong>` + products_struct);
+        } else {
+          productTag.html(
+            `<strong>محصولات</strong><br><span>موردی یافت نشد!</span>`
+          );
+        }
+      }
+      function renderArticles(articles) {
+        let articles_struct = "";
+        var articleTag = $(".autocomplete-articles");
+        if (articles.length > 0) {
+          $(articles).each(function (key, article) {
+            let mainCategory = article.mainCategory[0];
+            articles_struct += `
+                            <a href="${article.url}" title="" target="_self"
+                                class="autocomplete-product autocomplete-article">
+                                <div class="autocomplete-product-image">
+                                    <img src="${
+                                      article.image ? article.image.url : null
+                                    }" alt="" />
+                                </div>
+                                <div class="autocomplete-product-body">
+                                    <p class="fw-bold">${article.title}</p>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="text-muted text-small">${
+                                          mainCategory ? mainCategory.title : ""
+                                        }</span>
+                                        <strong class="text-muted">${
+                                          article.published_at
+                                        }</strong>
+                                    </div>
+                                </div>
+                            </a>`;
+          });
+          articleTag.html(`<strong>مقالات</strong>` + articles_struct);
+        } else {
+          articleTag.html(
+            `<strong>مقالات</strong><br><span>موردی یافت نشد!</span>`
+          );
+        }
+      }
+      function sendSearchRequest(url, query) {
+        $.ajax({
+          url: url,
+          method: "GET",
+          data: {
+            q: query,
+            includes: "category,article",
+          },
+          success: function (response) {
+            let data = response.data;
+            renderProducts(data.products);
+            renderArticles(data.articles);
+            renderCategories(data.categories);
+          },
+          error: function (xhr, status, error) {
+            var errors = JSON.parse(xhr.responseText);
+            if (errors.message) {
+              var e = errors.errors;
+            } else {
+              var e = errors.meta.status.messages;
+            }
+            for (message in e) {
+              console.log(e[message]);
+            }
+          },
+        });
+      }
+
+      function numberFormat(number) {
+        var locale = "fa";
+        var options = { minimumFractionDigits: 0, maximumFractionDigits: 2 };
+        var formatter = new Intl.NumberFormat(locale, options);
+        return formatter.format(number);
+      }
+      function ShowGeneralModalExternal(tag, title, url) {
+        let element = $(tag);
+        element.find(".modal-body").html("در حال پردازش...");
+        element.find("#generalModalLabel").text(title);
+        element.modal("show");
+
+        element.find(".modal-body").load(url, "", function () {});
+      }
+      $(".product-like").on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).closest(".col-lg-4").addClass("fadeInOutLoading");
+        let type = $(this).data("type");
+        let id = $(this).data("id");
+        handleBookmark(this, id, type);
+      });
+      let handleBookmark = function (
+        element,
+        itemId,
+        itemType,
+        method = "attach"
+      ) {
+        let url = "https://ibolak.com/bookmark/:model_id/sync";
+        url = url.replace(":model_id", itemId);
+        $.ajax({
+          url: url,
+          type: "POST",
+          context: this,
+          data: {
+            _token: $('meta[name="csrf-token"]').attr("content"),
+            model_type: itemType,
+          },
+          success: function (response, textStatus, jqXHR) {
+            let data = response.data;
+            const message = response.meta.status.messages[0];
+            toast("", message, "success", {
+              timeOut: 10000,
+              progressBar: true,
+              positionClass: "toast-bottom-right",
+            });
+            if (data.state === "delete") {
+              $(element).closest(".col-lg-4").remove();
+            }
+          },
+          error: function (xhr, status, error) {
+            const data = JSON.parse(xhr.responseText);
+            const message = data.meta.status.messages[0];
+            toast("", message, "error", {
+              timeOut: 10000,
+              progressBar: true,
+              positionClass: "toast-bottom-right",
+            });
+          },
+        });
+      };
+    </script>
+  </body>
+</html>

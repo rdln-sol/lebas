@@ -1,0 +1,13 @@
+.img-lgin img{
+    width: 30%;
+    mix-blend-mode: darken;
+}
+
+.img-lgin {
+    border-bottom: 2px solid #efefef;
+}
+
+::-webkit-input-placeholder{
+    font-size: 13px;
+    color: red;
+}

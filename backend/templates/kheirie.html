@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ورود</title>
+    <script
+      type="text/javascript"
+      async=""
+      src="https://www.google-analytics.com/analytics.js"
+    ></script>
+    <script
+      type="text/javascript"
+      async=""
+      src="https://www.googletagmanager.com/gtag/js?id=G-D820J2MXBK&amp;l=dataLayer&amp;cx=c"
+    ></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/js/jquery.min.js' %}"></script>
+    <script src="{% static '/js/lottie-player.min.js' %}"></script>
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static '/js/nouislider.min.js' %}"></script>
+    <script src="{% static '/js/toastr.min.js' %}"></script>
+
+    <link rel="icon" href="{% static '/img/ghazi-logo.jpg' %}" type="image/png" />
+    <link rel="stylesheet" href="{% static '/css/fnt.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/login.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/toastr.min.css' %}" />
+  </head>
+  <body>
+    <div
+      class="container d-flex justify-content-center min-vh-100 align-items-center"
+    >
+    <div class="row justify-content-md-center">
+        <div class="card mb-3 form-sign col-sm-4 lg-in">
+            {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ msg }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+          <div class="card-body">
+            <div
+              class="img-lgin d-flex justify-content-around align-items-center"
+            >
+              <img src="{% static '/img/ghazi-logo.jpg' %}" alt="" />
+              <p>فروشگاه من و تو</p>
+            </div>
+            <form method="POST">{% csrf_token %}
+            <p class="text-form2 mt-2 mb-2">ایمیل</p>
+            <input
+              type="text"
+              name='email'
+              class="form-control inp-form mb-2"
+              id="exampleFormControlInput1"
+              placeholder="ایمیل خود را وارد کنید..."
+            />
+            <div class="d-grid gap-2 col-12 mx-auto">
+              <button
+                class="btn btn-primary justify-content-center"
+                type="submit"
+              >
+                ارسال ایمیل
+              </button>
+            </div>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastr-container" class="toast-bottom-left">
+      <div class="toastr toastr-error" aria-live="assertive">
+        <div class="toastr-title">خطا</div>
+        <div class="toastr-message">اطلاعات وارد شده صحیح نمی‌باشد</div>
+      </div>
+    </div>
+
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
